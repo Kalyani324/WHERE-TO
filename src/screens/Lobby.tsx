@@ -63,12 +63,12 @@ export function Lobby({ ctx, bots }: { ctx: Ctx; bots: boolean }) {
 
       {d.isHost && bots && meta.devBots && room_left > 0 && (
         <div className="card tight row between">
-          <span className="row small" style={{ fontWeight: 600 }}><Bot size={16} /> Add bots</span>
+          <span className="row small" style={{ fontWeight: 600 }}><Bot size={16} /> Demo bots</span>
           <div className="row">
             <button className="icon-btn" aria-label="Fewer bots" onClick={() => setBotN(Math.max(1, botN - 1))}><Minus size={16} /></button>
             <span className="num" style={{ width: 20, textAlign: 'center', fontWeight: 600 }}>{Math.min(botN, room_left)}</span>
             <button className="icon-btn" aria-label="More bots" onClick={() => setBotN(Math.min(room_left, botN + 1))}><Plus size={16} /></button>
-            <button className="btn small" disabled={busy} onClick={() => run('addBots', { count: Math.min(botN, room_left) })}>Add bot{botN > 1 ? 's' : ''}</button>
+            <button className="btn small" disabled={busy} onClick={() => run('addBots', { count: Math.min(botN, room_left) })}>Add</button>
           </div>
         </div>
       )}

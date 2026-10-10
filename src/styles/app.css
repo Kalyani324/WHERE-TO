@@ -147,7 +147,8 @@ input[type='range'] { width: 100%; accent-color: var(--accent); height: 32px; }
 /* players */
 .avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); color: var(--text); flex: none; border: 2px solid var(--surface); box-shadow: 0 0 0 1.5px var(--ring, var(--border)); }
 .avatar.sm { width: 28px; height: 28px; }
-.player-list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+.player-list { display: grid; grid-template-columns: 1fr; gap: var(--s-2); }
+@media (min-width: 420px) { .player-list { grid-template-columns: 1fr 1fr; } }
 .player-chip { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); min-width: 0; }
 .player-chip .name { font-weight: 600; font-size: var(--fs-15); }
 .player-chip .title { font-size: var(--fs-13); color: var(--text-2); }
