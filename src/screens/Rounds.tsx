@@ -296,7 +296,7 @@ export function Reveal({ ctx }: { ctx: Ctx }) {
             <div className="plan-row" style={p!.id === rev.winner && stage >= 2 ? { borderColor: 'var(--accent)' } : undefined}>
               <span className="dot" style={{ background: p!.color }} />
               <div className="grow"><div className="dest">{p!.destination}</div><div className="owners">{p!.ownerNames.join(' & ')}</div></div>
-              {stage >= 1 && <span className="num score">{rev.tally[p!.id] ?? 0} <span className="small muted">votes</span></span>}
+              {stage >= 1 && <span className="num score">{rev.tally[p!.id] ?? 0} <span className="small muted">{(rev.tally[p!.id] ?? 0) === 1 ? "vote" : "votes"}</span></span>}
               {stage >= 2 && p!.id === rev.winner && <Trophy size={18} color="var(--accent)" aria-label="Winner" />}
             </div>
           </motion.div>
