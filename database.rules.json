@@ -1,0 +1,65 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "rooms": {
+      "$code": {
+        "meta": { ".read": "auth != null" },
+        "state": { ".read": "auth != null" },
+        "players": { ".read": "auth != null" },
+        "plans": { ".read": "auth != null" },
+        "results": { ".read": "auth != null" },
+        "pack": { ".read": "auth != null" },
+        "sidekick": { ".read": "auth != null" },
+        "presence": {
+          ".read": "auth != null",
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "!newData.exists() || newData.child('since').val() === now"
+          }
+        },
+        "locks": {
+          ".read": "auth != null",
+          "$step": {
+            "$uid": {
+              ".write": "auth != null && auth.uid === $uid",
+              ".validate": "newData.isBoolean()"
+            }
+          }
+        },
+        "inputs": {
+          "$step": {
+            "$uid": {
+              ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($code).child('players').child($uid).exists()",
+              ".validate": "newData.hasChildren(['v', 't']) && newData.child('t').val() === now"
+            }
+          }
+        },
+        "drafts": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && !data.child('locked').exists()"
+          }
+        },
+        "seen": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid"
+          }
+        },
+        "private": {
+          "$uid": {
+            "passport": {
+              ".write": "auth != null && auth.uid === $uid",
+              ".validate": "newData.isString() && newData.val().length < 60"
+            },
+            "quiz": {
+              ".write": "auth != null && auth.uid === $uid && !data.exists()",
+              ".validate": "newData.hasChildren(['pace', 'budget', 'maxHours', 't']) && newData.child('t').val() === now"
+            }
+          }
+        }
+      }
+    }
+  }
+}
