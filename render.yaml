@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: where-to
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm run serve
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: FIREBASE_DATABASE_URL
+        value: https://where-to-d4c85-default-rtdb.asia-southeast1.firebasedatabase.app
+      - key: GEMINI_MODEL
+        value: gemini-flash-lite-latest
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
