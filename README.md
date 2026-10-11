@@ -1,14 +1,24 @@
 # WHERE TO?
 
-A phone party game that settles a group trip. Anyone proposes a destination plan, everyone plays quick mini-games that measure what the group wants, plans earn points, get edited live, the weakest are eliminated, and a secret final vote picks the winner with a Trip Reality Check card.
+**Stop arguing. Play your way to the next group trip.**
+
+WHERE TO? is a party game you play on your phones to pick your next group trip. Anyone can pitch a plan, everyone plays quick mini-games, the weakest plans get knocked out, and a secret final vote picks the winner.
+
+Planning a group trip usually means a messy chat and nobody making a call. Start a room and share the 4-letter code or QR. Each person pitches a trip plan: where to go, the budget and the vibe. Then everyone plays short mini-games that show what the group actually wants, like how much to spend, how adventurous to get and how much to pack into each day. Plans earn points for how well they fit the group, players can edit them as the game goes, and each round knocks out the weakest. At the end there's a secret vote for the winner, and a Trip Reality Check card shows whether the plan really works.
+
+No sign-up and nothing to install. Works on phones, and on laptops you get a board view for the whole room.
+
+**Play it:** LIVE_URL (needs 3+ players; add `?bots=1` to the link to try it alone with bots)
+
+## Tech
 
 - React + Vite + TypeScript (mobile-first, plus a landscape board view on laptops)
 - Firebase Realtime Database (anonymous auth, private paths locked by rules)
-- One Vercel serverless function (`api/game.ts`) for scoring, phase changes and AI
+- One API handler (`api/game.ts`) for scoring, phase changes and AI, served by `scripts/serve.ts` (Render) or as a Vercel function
 - Google Gemini `gemini-flash-lite-latest` (the spec asked for `gemini-2.5-flash-lite`, which Google no longer offers to new API keys) behind one wrapper (`api/_lib/ai.ts` + `api/_lib/provider.ts`)
 - All scoring, Fit, elimination, entry and tie-break logic is pure code in `src/engine` (no DB, no AI). Section 15 of the spec is `src/engine/__tests__/workedExample.test.ts`.
 
-Free tiers only: Firebase Spark, Vercel Hobby, Gemini free tier.
+Free tiers only: Firebase Spark, Render free (or Vercel Hobby), Gemini free tier.
 
 ## Project layout
 
@@ -79,7 +89,13 @@ Open the app with `?bots=1`, e.g. `http://localhost:5173/?bots=1` or `https://<y
 5. Project settings → General → Add web app → copy the config into the `VITE_FIREBASE_*` variables.
 6. Project settings → Service accounts → Generate new private key → use as `FIREBASE_SERVICE_ACCOUNT`.
 
-### Vercel (Hobby plan)
+### Render (free, recommended)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Kalyani324/WHERE-TO)
+
+`render.yaml` sets up one free Node web service: `npm ci && npm run build`, then `npm run serve` (`scripts/serve.ts` serves `dist/` and `/api/game` on one port). When asked, paste `FIREBASE_SERVICE_ACCOUNT` and (optionally) `GEMINI_API_KEY`. On the free plan the first request after the service has been idle takes about 50 seconds while it wakes up.
+
+### Vercel (Hobby plan, alternative)
 1. `npx vercel link` (or import the repo in the Vercel dashboard; framework preset: Vite).
 2. Add every variable from the table above in Project → Settings → Environment Variables (leave `VITE_USE_EMULATOR` unset).
 3. `npx vercel deploy --prod`.
