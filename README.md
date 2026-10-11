@@ -5,7 +5,7 @@ A phone party game that settles a group trip. Anyone proposes a destination plan
 - React + Vite + TypeScript (mobile-first, plus a landscape board view on laptops)
 - Firebase Realtime Database (anonymous auth, private paths locked by rules)
 - One Vercel serverless function (`api/game.ts`) for scoring, phase changes and AI
-- Google Gemini `gemini-2.5-flash-lite` behind one wrapper (`api/_lib/ai.ts` + `api/_lib/provider.ts`)
+- Google Gemini `gemini-flash-lite-latest` (the spec asked for `gemini-2.5-flash-lite`, which Google no longer offers to new API keys) behind one wrapper (`api/_lib/ai.ts` + `api/_lib/provider.ts`)
 - All scoring, Fit, elimination, entry and tie-break logic is pure code in `src/engine` (no DB, no AI). Section 15 of the spec is `src/engine/__tests__/workedExample.test.ts`.
 
 Free tiers only: Firebase Spark, Vercel Hobby, Gemini free tier.
@@ -59,7 +59,7 @@ npx tsx scripts/smoke.ts 2   # plays a whole Quick Mode game: 3 real clients + 2
 | `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_DATABASE_URL`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_APP_ID` | client (public) | Firebase web config |
 | `VITE_USE_EMULATOR` | client | `1` = talk to the local emulator |
 | `GEMINI_API_KEY` | server (secret) | Gemini API key. Never sent to the client |
-| `GEMINI_MODEL` | server | defaults to `gemini-2.5-flash-lite` |
+| `GEMINI_MODEL` | server | defaults to `gemini-flash-lite-latest` |
 | `FIREBASE_SERVICE_ACCOUNT` | server (secret) | service-account JSON (raw or base64) |
 | `FIREBASE_DATABASE_URL` | server | e.g. `https://<project>-default-rtdb.<region>.firebasedatabase.app` |
 | `AI_MOCK` | server | `1` = never call Gemini |

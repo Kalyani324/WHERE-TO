@@ -1,9 +1,9 @@
 // Plays a Quick Mode game alone with ?bots=1 in Devin's Chrome, screenshotting each step in both themes.
 import { chromium } from 'playwright-core'
 const browser = await chromium.connectOverCDP('http://localhost:29229')
-const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true })
+const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, ...(process.env.UA ? { userAgent: process.env.UA } : {}) })
 const page = await ctx.newPage()
-const out = process.env.HOME + '/shots'
+const out = process.env.HOME + (process.env.OUT || '/shots')
 const seen = new Set()
 const shot = async (name) => {
   for (const scheme of ['light', 'dark']) {
@@ -13,14 +13,14 @@ const shot = async (name) => {
   }
   await page.emulateMedia({ colorScheme: 'light' })
 }
-await page.goto('http://localhost:5173/?bots=1')
+await page.goto((process.env.BASE || 'http://localhost:5173') + '/?bots=1')
 await page.waitForSelector('#name')
 await shot('01-home')
 await page.fill('#name', 'Kalyani')
 await page.click('text=Create room')
 await page.waitForSelector('.room-code')
 await page.click('[aria-label="More bots"]').catch(() => {})
-await page.click('button:has-text("Add bot")')
+await page.getByRole('button', { name: 'Add', exact: true }).click()
 await page.waitForTimeout(800)
 await shot('02-lobby')
 await page.click('text=Start game')

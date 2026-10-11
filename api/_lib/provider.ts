@@ -15,7 +15,7 @@ export function providerConfigured(): boolean {
 }
 
 export async function generateJsonText(prompt: string, timeoutMs: number): Promise<string> {
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite'
+  const model = process.env.GEMINI_MODEL || 'gemini-flash-lite-latest'
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
   const ctrl = new AbortController()
   const timer = setTimeout(() => ctrl.abort(), timeoutMs)

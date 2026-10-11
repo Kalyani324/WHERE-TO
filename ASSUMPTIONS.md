@@ -40,3 +40,6 @@ Where SPEC.md was ambiguous, the simplest option was picked and noted here.
 - Global queue: a per-minute counter in the database (`AI_RPM`, default 8) shared by all rooms; calls wait for a slot within their time budget, then fall back.
 - Per-room cap: 60 calls. Responses are cached by prompt hash.
 - Sidekick comments are dropped (not queued) if one was posted in the last 10 seconds.
+
+- Gemini model: `gemini-2.5-flash-lite` returns "no longer available to new users" for new API keys, so the default is `gemini-flash-lite-latest` (free tier, same Flash-Lite family). Override with `GEMINI_MODEL`.
+- Hosting without Vercel: `scripts/serve.ts` serves `dist/` and `/api/game` on one port; a Cloudflare quick tunnel (`cloudflared tunnel --url http://localhost:8080`) gives phones a public HTTPS link while the machine is on.

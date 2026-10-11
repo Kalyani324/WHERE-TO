@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc -b && tsc -p tsconfig.api.json",
+    "serve": "tsx scripts/serve.ts",
     "emulators": "firebase emulators:start --only auth,database --project demo-whereto",
     "api": "FIREBASE_DATABASE_EMULATOR_HOST=127.0.0.1:9000 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099 tsx watch scripts/dev-api.ts",
     "dev:all": "npm run emulators & npm run api & vite"
